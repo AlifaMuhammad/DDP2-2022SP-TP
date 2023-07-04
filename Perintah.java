@@ -53,15 +53,24 @@ public class Perintah {
         else if (in[0].equalsIgnoreCase("reset"))
             kurakuraku.reset();
         else if (in[0].equalsIgnoreCase("maju"))
-            kurakuraku.maju(Integer.parseInt(in[1]));
+            if (in.length > 1) {
+                kurakuraku.maju(Integer.parseInt(in[1]));
+            }
+            else{
+                return "perintah tidak dipahami";
+            }
         else if (in[0].equalsIgnoreCase("mundur"))
                 kurakuraku.mundur(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("rotasi"))
                 kurakuraku.rotasi(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("kotak"))
                 buatKotak(Integer.parseInt(in[1]));
+        else if (in[0].equalsIgnoreCase("persegi"))
+                buatPersegi(Integer.parseInt(in[1]), Integer.parseInt(in[2])); 
         else if (in[0].equalsIgnoreCase("segitiga"))
                 buatSegitiga(Integer.parseInt(in[1]));
+        else if (in[0].equalsIgnoreCase("Segitigasikusiku"))
+                buatSegitigasikusiku(Integer.parseInt(in[1]), Integer.parseInt(in[2])); 
         else if (in[0].equalsIgnoreCase("pohon"))
                 buatPohon();        
         else if (in[0].equalsIgnoreCase("jejak"))
@@ -82,8 +91,35 @@ public class Perintah {
             kurakuraku.rotasi(90);
         }
     }
+
+    public void buatPersegi(int panjang, int lebar){
+        for (int i=0;i<2;i++){
+            kurakuraku.maju(panjang);
+            kurakuraku.rotasi(90);
+            kurakuraku.maju(lebar);
+            kurakuraku.rotasi(90);
+        }
+
+    }
+
+    private void buatSegitigasikusiku(int panjang, int tinggi){
+        double n = (panjang*panjang)+(tinggi*tinggi);
+        double akar = Math.sqrt(n); // hasil akar adalah float atau double
+        double sudut = 180 - Math.toDegrees(Math.atan(panjang / tinggi));
+        kurakuraku.maju(panjang);
+        kurakuraku.rotasi(90);
+        kurakuraku.maju(tinggi);
+        kurakuraku.rotasi(sudut);
+        kurakuraku.maju(akar);
+        
+
+    }
+
     public void buatSegitiga(int ukuran){
-        // TODO: Lengkapi isi method ini agar kura-kura bisa membuat segitiga sama sisi
+        for (int i = 0; i < 3; i++) {
+            kurakuraku.maju(ukuran);
+            kurakuraku.rotasi(120);
+        }
 
     }        
     
@@ -105,15 +141,18 @@ public class Perintah {
             Dimension posAwal = kurakuraku.getPosition();
             double arah = kurakuraku.getArah();
             double sudut = arah;
-            for(int i=0;i<3;i++){  
+            for(int i=0;i<3;i++){ 
+                if (ukuran == 1){kurakuraku.setPosition(posAwal);// pada saat berada di ujung ranting atau pada loop terakhir
+                    buatKotak(3);
+                } 
                 buatPohon(ukuran-1,(int)(tinggi/1.5));
                 kurakuraku.setJejak(false);
                 kurakuraku.setPosition(posAwal);
                 kurakuraku.setArah(arah);                
                 sudut+=45;
                 kurakuraku.rotasi(sudut);  
-            }     
-        }
+            }                 
+        }        
         kurakuraku.reset();
     }
 }
