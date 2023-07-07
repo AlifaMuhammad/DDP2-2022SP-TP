@@ -65,6 +65,8 @@ public class Perintah {
                 kurakuraku.rotasi(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("kotak"))
                 buatKotak(Integer.parseInt(in[1]));
+        else if (in[0].equalsIgnoreCase("boxes"))
+                buatBoxes(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("persegi"))
                 buatPersegi(Integer.parseInt(in[1]), Integer.parseInt(in[2])); 
         else if (in[0].equalsIgnoreCase("segitiga"))
@@ -123,6 +125,24 @@ public class Perintah {
 
     }        
     
+    /** Method ini membuat bentuk kotak menjadi lebih kecil dengan metode rekursif
+     * tentukan ukuran
+     * kurakura akan membentuk kotak
+     * ukuran kotak akan berkurang 20 dengan metode rekursif 
+     */
+    public void buatBoxes(int ukuran){
+        if (ukuran >= 0) {
+            buatKotak(ukuran);
+            kurakuraku.setJejak(false);
+            kurakuraku.maju(10);
+            kurakuraku.rotasi(90);
+            kurakuraku.maju(10);
+            kurakuraku.rotasi(-90);
+            kurakuraku.setJejak(true);
+            buatBoxes(ukuran-20);
+        }
+    }
+
     public void buatPohon(){        
         kurakuraku.setJejak(false);
         kurakuraku.reset();
