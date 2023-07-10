@@ -67,6 +67,8 @@ public class Perintah {
                 buatKotak(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("boxes"))
                 buatBoxes(Integer.parseInt(in[1]));
+        else if (in[0].equalsIgnoreCase("bintang"))
+                buatBintang(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("persegi"))
                 buatPersegi(Integer.parseInt(in[1]), Integer.parseInt(in[2])); 
         else if (in[0].equalsIgnoreCase("segitiga"))
@@ -120,7 +122,7 @@ public class Perintah {
     public void buatSegitiga(int ukuran){
         for (int i = 0; i < 3; i++) {
             kurakuraku.maju(ukuran);
-            kurakuraku.rotasi(120);
+            kurakuraku.rotasi(-120);
         }
 
     }        
@@ -143,9 +145,32 @@ public class Perintah {
         }
     }
 
+    /** Method ini membuat bentuk bintang yang akan menjadi lebih kecil dengan metode rekursif
+     * tentukan ukuran bintang
+     * kurakura akan membentuk bintang dengan sudut yg sudah diperkirakan 
+     * ukuran bintang akan berkurang setengahnya dengan metode rekursif 
+     */
+    public void buatBintang(int ukuran){
+        if (ukuran >= 2){    
+            for (int i = 0; i < 5; i++) {
+                kurakuraku.maju(ukuran);
+                kurakuraku.rotasi(-72);
+                kurakuraku.maju(ukuran);
+                kurakuraku.rotasi(144);                
+            }
+        kurakuraku.setJejak(false);
+        kurakuraku.maju(ukuran/2+ukuran/4);
+        kurakuraku.rotasi(90);
+        kurakuraku.maju(ukuran/3);
+        kurakuraku.rotasi(-90);
+        kurakuraku.setJejak(true);
+        buatBintang(ukuran/2);        
+        }
+    }
+
     public void buatPohon(){        
         kurakuraku.setJejak(false);
-        kurakuraku.reset();
+        kurakuraku.reset();     
         kurakuraku.rotasi(90);
         kurakuraku.maju(100);
         kurakuraku.rotasi(180);
