@@ -69,6 +69,8 @@ public class Perintah {
                 buatBoxes(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("bintang"))
                 buatBintang(Integer.parseInt(in[1]));
+        else if (in[0].equalsIgnoreCase("sierpinski"))
+                buatSierpinski(Integer.parseInt(in[1]));
         else if (in[0].equalsIgnoreCase("persegi"))
                 buatPersegi(Integer.parseInt(in[1]), Integer.parseInt(in[2])); 
         else if (in[0].equalsIgnoreCase("segitiga"))
@@ -127,10 +129,12 @@ public class Perintah {
 
     }        
     
-    /** Method ini membuat bentuk kotak menjadi lebih kecil dengan metode rekursif
+    /**
+     * Method ini membuat bentuk kotak menjadi lebih kecil dengan metode rekursif
      * tentukan ukuran
      * kurakura akan membentuk kotak
      * ukuran kotak akan berkurang 20 dengan metode rekursif 
+     * @param ukuran
      */
     public void buatBoxes(int ukuran){
         if (ukuran >= 0) {
@@ -145,10 +149,12 @@ public class Perintah {
         }
     }
 
-    /** Method ini membuat bentuk bintang yang akan menjadi lebih kecil dengan metode rekursif
+    /**
+     * Method ini membuat bentuk bintang yang akan menjadi lebih kecil dengan metode rekursif
      * tentukan ukuran bintang
      * kurakura akan membentuk bintang dengan sudut yg sudah diperkirakan 
-     * ukuran bintang akan berkurang setengahnya dengan metode rekursif 
+     * ukuran bintang akan berkurang setengahnya dengan metode rekursi
+     * @param ukuran
      */
     public void buatBintang(int ukuran){
         if (ukuran >= 2){    
@@ -165,6 +171,52 @@ public class Perintah {
         kurakuraku.rotasi(-90);
         kurakuraku.setJejak(true);
         buatBintang(ukuran/2);        
+        }
+    }
+
+    /**
+     * Method ini akan membuat kurakura menjadi bentuk sierpinski atau segitiga fractal
+     * tentukan ukuran segitiga 
+     * pertama-tama kura-kura akan membuat segitiga yang paling besar kemudian dilanjutkan dengan segitiga yg terletak ditengah
+     * selanjutnya tentukan posisinya 
+     * selanjutnya dengan memanggil method sierpinskirekursif kura-kura akan membuat segitiga dibagian kanan dengan metode rekursif(segitiga semakin kecil)
+     * selanjutnya kura-kura akan membuat sisi bagian kiri dilanjutkan dengan bagian atas dengan menggunakan metode rekursif yang sama 
+     * @param ukuran
+     */
+
+    public void buatSierpinski(int ukuran){
+        buatSegitiga(ukuran);
+        kurakuraku.maju(ukuran/2);
+        sierpinskirekursif(ukuran/2);
+    }
+
+    public void sierpinskirekursif(int ukuran){
+        if (ukuran > 4) {
+            kurakuraku.rotasi(-60);
+            buatSegitiga(ukuran);
+            kurakuraku.rotasi(60);
+            Dimension pos = kurakuraku.getPosition();
+            kurakuraku.setJejak(false);
+            kurakuraku.maju(ukuran/2);
+            kurakuraku.setJejak(true);
+            sierpinskirekursif(ukuran/2);// Membuat segitiga bagian kanan 
+            kurakuraku.reset();
+            kurakuraku.setPosition(pos);
+            kurakuraku.setJejak(false);
+            kurakuraku.mundur(ukuran/2);
+            kurakuraku.setJejak(true);
+            sierpinskirekursif(ukuran/2);// Membuat segitiga bagian kiri
+            kurakuraku.reset();
+            kurakuraku.setPosition(pos);
+            kurakuraku.setJejak(false);
+            kurakuraku.rotasi(-60);
+            kurakuraku.maju(ukuran);
+            kurakuraku.rotasi(-120);
+            kurakuraku.maju(ukuran/2);
+            kurakuraku.rotasi(180);
+            kurakuraku.setJejak(true);
+            sierpinskirekursif(ukuran/2);// Membuat segitiga bagian atas
+
         }
     }
 
